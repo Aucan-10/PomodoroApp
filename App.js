@@ -10,7 +10,7 @@ import { Audio } from "expo-av";
 
 const MODES = {
   pomodoro: { label: "Pomodoro", time: 25 * 60, color: "#ba4949" },
-  shortBreak: { label: "Descanso Corto", time: 10, color: "#38858a" },
+  shortBreak: { label: "Descanso Corto", time: 5 * 60, color: "#38858a" },
   longBreak: { label: "Descanso Largo", time: 10 * 60, color: "#397097" },
 };
 
