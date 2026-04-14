@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -10,8 +10,8 @@ import { Audio } from "expo-av";
 
 const MODES = {
   pomodoro: { label: "Pomodoro", time: 25 * 60, color: "#ba4949" },
-  shortBreak: { label: "Descanso Corto", time: 5 * 60, color: "#38858a" },
-  longBreak: { label: "Descanso Largo", time: 10 * 60, color: "#397097" },
+  shortBreak: { label: "Descanso Corto", time: 5 * 60, color: "#16A4F0" },
+  longBreak: { label: "Descanso Largo", time: 10 * 60, color: "#0376F0" },
 };
 
 export default function App() {
@@ -100,7 +100,7 @@ export default function App() {
   return (
     <View style={[styles.container, { backgroundColor: currentColor }]}>
       <StatusBar barStyle="light-content" />
-      <Text style={styles.title}>Pomodoro Timer</Text>
+      <Text style={styles.title}>POMODORO</Text>
 
       <View style={styles.tabs}>
         {Object.entries(MODES).map(([key, { label }]) => (
@@ -134,7 +134,7 @@ export default function App() {
         activeOpacity={0.7}
       >
         <Text style={styles.buttonText}>
-          {isRunning ? "⏸ Pausar" : "▶ Empezar"}
+          {isRunning ? "Pausar" : "Empezar"}
         </Text>
       </TouchableOpacity>
     </View>
