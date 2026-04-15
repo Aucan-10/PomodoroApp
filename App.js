@@ -5,16 +5,25 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import { Audio } from "expo-av";
+import { useFonts, Bungee_400Regular } from "@expo-google-fonts/bungee";
+import { Ionicons } from "@expo/vector-icons";
 
+// 1. MODIFICACIÓN: Colores de fondo actualizados
 const MODES = {
-  pomodoro: { label: "Pomodoro", time: 25 * 60, color: "#ba4949" },
-  shortBreak: { label: "Descanso Corto", time: 5 * 60, color: "#16A4F0" },
-  longBreak: { label: "Descanso Largo", time: 10 * 60, color: "#0376F0" },
+  pomodoro: { label: "Pomodoro", time: 25 * 60, color: "#FF5733" }, // Naranja vibrante
+  shortBreak: { label: "Descanso", time: 5 * 60, color: "#33FF57" }, // Verde neón
+  longBreak: { label: "Largo", time: 10 * 60, color: "#3357FF" },    // Azul eléctrico
 };
 
 export default function App() {
+  // 2. MODIFICACIÓN: Carga de la fuente loca (Bungee)
+  let [fontsLoaded] = useFonts({
+    Bungee_400Regular,
+  });
+
   const [mode, setMode] = useState("pomodoro");
   const [timeLeft, setTimeLeft] = useState(MODES.pomodoro.time);
   const [isRunning, setIsRunning] = useState(false);
@@ -95,6 +104,11 @@ export default function App() {
     return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
+  // Si la fuente no cargó, mostramos un cargando
+  if (!fontsLoaded) {
+    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
+  }
+
   const currentColor = MODES[mode].color;
 
   return (
@@ -128,14 +142,17 @@ export default function App() {
 
       <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
 
+      {/* 4. MODIFICACIÓN: Botón con íconos Play/Pause */}
       <TouchableOpacity
         style={styles.button}
         onPress={toggleTimer}
         activeOpacity={0.7}
       >
-        <Text style={styles.buttonText}>
-          {isRunning ? "Pausar" : "Empezar"}
-        </Text>
+        <Ionicons 
+          name={isRunning ? "pause" : "play"} 
+          size={40} 
+          color={currentColor} 
+        />
       </TouchableOpacity>
     </View>
   );
@@ -150,9 +167,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: "600",
     color: "#fff",
     marginBottom: 40,
+    fontFamily: "Bungee_400Regular", // Aplicada la fuente loca
   },
   tabs: {
     flexDirection: "row",
@@ -170,26 +187,28 @@ const styles = StyleSheet.create({
   tabText: {
     color: "#fff",
     fontSize: 14,
+    fontFamily: "Bungee_400Regular", // Fuente aplicada a tabs
   },
   tabTextActive: {
     color: "#333",
-    fontWeight: "bold",
   },
   timer: {
-    fontSize: 72,
-    fontWeight: "700",
+    fontSize: 80,
     color: "#fff",
     marginBottom: 40,
+    fontFamily: "Bungee_400Regular", // Fuente aplicada al reloj
   },
   button: {
     backgroundColor: "#fff",
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-  },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#333",
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
 });
